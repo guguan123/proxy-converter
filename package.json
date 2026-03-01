@@ -1,13 +1,22 @@
 {
   "name": "clash2sub",
   "version": "1.0.0",
-  "description": "",
+  "description": "A lightweight utility to convert Clash proxies to V2Ray subscription links.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "files": [
+    "index.js",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guguan123/clash2sub.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "clash",
+    "v2ray",
+    "subscription"
+  ],
+  "author": "guguan123",
+  "license": "MIT",
   "type": "commonjs"
 }
