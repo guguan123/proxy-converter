@@ -1,6 +1,6 @@
 {
   "name": "clash2sub",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A lightweight utility to convert Clash proxies to V2Ray subscription links.",
   "main": "index.js",
   "files": [
