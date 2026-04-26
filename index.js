@@ -166,7 +166,7 @@ function convertClashProxiesToV2rayLinks(proxies) {
 					let tuicParams = new URLSearchParams();
 
 					// 拥塞控制
-					if (p['congestion-control']) tuicParams.set('congestion_control', p['congestion-control']);
+					if (p['congestion-controller']) tuicParams.set('congestion_control', p['congestion-controller']);
 
 					// UDP RELAY 模式
 					if (p['udp-relay-mode']) tuicParams.set('udp_relay_mode', p['udp-relay-mode']);
