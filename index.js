@@ -104,7 +104,15 @@ function convertClashProxiesToV2rayLinks(proxies) {
 						if (p["reality-opts"]?.["short-id"]) vlessParams.set('sid', p["reality-opts"]["short-id"]);
 
 						// ECH
-						if (p['ech-config'] && p['ech-config'].enable && p['ech-config'].config) vlessParams.set('ech', p['ech-config'].config);
+						if (p['ech-config'] && p['ech-config'].enable) {
+							if (p['ech-config'].config) {
+								// 静态配置，直接塞入 Base64 字符串
+								vlessParams.set('ech', p['ech-config'].config);
+							} else if (p['ech-config']['query-server-name']) {
+								// 动态解析，host+doh 的格式
+								vlessParams.set('ech', `${p['ech-config']['query-server-name']}+https://dns.alidns.com/dns-query`);
+							}
+						}
 					} else {
 						vlessParams.set('security', 'none');
 					}
