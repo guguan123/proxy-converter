@@ -16,8 +16,31 @@ function convertClashProxiesToV2rayLinks(proxies) {
 				// Shadowsocks
 				case 'ss': {
 					// ss://base64(method:password)@server:port#name
-					link = `ss://${Buffer.from(`${p.cipher}:${p.password}`).toString('base64')}@${normalize_server_address(p.server)}:${p.port}#${encodeURIComponent(p.name)}`;
-					break;
+					link = `ss://${Buffer.from(`${p.cipher}:${p.password}`).toString('base64')}@${normalize_server_address(p.server)}:${p.port}`;
+
+					if (p.plugin === 'v2ray-plugin' && p['plugin-opts']) {
+							const parts = ['v2ray-plugin'];
+
+							if (p['plugin-opts'].mode) parts.push(`mode=${p['plugin-opts'].mode}`);
+							if (p['plugin-opts'].host) parts.push(`host=${p['plugin-opts'].host}`);
+							if (p['plugin-opts'].path) parts.push(`path=${p['plugin-opts'].path}`);
+
+							if (p['plugin-opts'].tls === true) parts.push('tls');
+							if (p['plugin-opts'].mux === true || p['plugin-opts'].mux === 0) parts.push(`mux=${p['plugin-opts'].mux}`);
+
+							// 连接符分号 ;
+							const pluginValue = parts.join(';');
+							// 处理转义
+							const params = new URLSearchParams();
+							params.append('plugin', pluginValue);
+							link += `/?${params.toString()}`;
+						} else if (p.plugin === 'obfs' && p['plugin-opts']) {
+							const pluginValue = `obfs-local;obfs=${p['plugin-opts'].mode || 'http'};obfs-host=${p['plugin-opts'].host || ''}`;
+							link += `/?${new URLSearchParams({ plugin: pluginValue }).toString()}`;
+						}
+
+						link += `#${encodeURIComponent(p.name)}`;
+						break;
 				}
 
 				// SOCKS
