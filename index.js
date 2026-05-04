@@ -132,6 +132,10 @@ function convertClashProxiesToV2rayLinks(proxies) {
 						vlessParams.set('headerType', 'http');
 						if (p["http-opts"]?.headers?.Host) vlessParams.set('host', p["http-opts"].headers.Host);
 						if (p["http-opts"]?.path) vlessParams.set('path', p["http-opts"].path);
+					} else if (p.network === 'xhttp') {
+						vlessParams.set('type', 'xhttp');
+						if (p["xhttp-opts"]?.path) vlessParams.set('path', p["xhttp-opts"].path);
+						if (p["xhttp-opts"]?.host) vlessParams.set('host', p["xhttp-opts"].host);
 					}
 
 					const vlessQuery = vlessParams.toString();
