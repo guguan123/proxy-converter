@@ -3,7 +3,7 @@
 
 ## 支持
 
-- Shadowsocks
+- Shadowsocks (v2ray-plugin)
 - SOCKS5
 - VMess (TLS, WebSocket)
 - VLESS (Reality, WebSocket, TLS, flow)

@@ -13,6 +13,14 @@ function convertClashProxiesToV2rayLinks(proxies) {
 			let link = null;
 
 			switch (p.type) {
+
+				// SOCKS
+				case 'socks5': {
+					// socks://username:password@server:port#name
+					link = `socks5://${p.username && p.password ? encodeURIComponent(p.username) + ':' + encodeURIComponent(p.password) + '@' : ''}${normalize_server_address(p.server)}:${p.port}#${encodeURIComponent(p.name)}`;
+					break;
+				}
+
 				// Shadowsocks
 				case 'ss': {
 					// ss://base64(method:password)@server:port#name
@@ -41,13 +49,6 @@ function convertClashProxiesToV2rayLinks(proxies) {
 
 						link += `#${encodeURIComponent(p.name)}`;
 						break;
-				}
-
-				// SOCKS
-				case 'socks5': {
-					// socks://username:password@server:port#name
-					link = `socks5://${p.username && p.password ? encodeURIComponent(p.username) + ':' + encodeURIComponent(p.password) + '@' : ''}${normalize_server_address(p.server)}:${p.port}#${encodeURIComponent(p.name)}`;
-					break;
 				}
 
 				// VMess
