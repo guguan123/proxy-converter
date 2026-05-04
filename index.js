@@ -84,38 +84,34 @@ function convertClashProxiesToV2rayLinks(proxies) {
 					// encryption
 					vlessParams.set('encryption', p.encryption || 'none');
 
-					// flow
+					// 控流
 					if (p.flow) vlessParams.set('flow', p.flow);
 
-					// type
+					// 传输层类型
 					vlessParams.set('type', p.network || 'tcp');
 
 					if (p.tls) {
-						// security (reality, tls)
+						// 加密类型 (reality, tls)
 						vlessParams.set('security', p["reality-opts"] ? 'reality' : 'tls');
 
-						// sni
+						// TLS配置
 						if (p.servername) vlessParams.set('sni', p.servername);
-
 						if (p["client-fingerprint"]) vlessParams.set('fp', p["client-fingerprint"]);
-
 						if (p["skip-cert-verify"]) vlessParams.set('allowInsecure', '1');
 
-						// pbk
+						// REALITY
 						if (p["reality-opts"]?.["public-key"]) vlessParams.set('pbk', p["reality-opts"]["public-key"]);
-
-						// sid
 						if (p["reality-opts"]?.["short-id"]) vlessParams.set('sid', p["reality-opts"]["short-id"]);
+
+						// ECH
+						if (p['ech-config'] && p['ech-config'].enable && p['ech-config'].config) vlessParams.set('ech', p['ech-config'].config);
 					} else {
-						// security (none)
 						vlessParams.set('security', 'none');
 					}
 
-					if (p.network === 'ws') {
-						// host
-						if (p["ws-opts"]?.["headers"]?.Host) vlessParams.set('host', p["ws-opts"]["headers"].Host);
-
-						// path
+					// 传输层配置
+					if (p.network === 'ws' && p["ws-opts"]) {
+						if (p["ws-opts"]?.headers?.Host) vlessParams.set('host', p["ws-opts"].headers.Host);
 						if (p["ws-opts"]?.path) vlessParams.set('path', p["ws-opts"].path);
 					}
 
