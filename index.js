@@ -1,4 +1,4 @@
-const net = require('net');
+import { isIPv6 } from 'net';
 
 /**
  * Converts a list of proxy configurations into V2Ray subscription links.
@@ -277,12 +277,12 @@ function normalize_server_address(server) {
 	if (!server) return server;
 
 	// Check if it is a valid IPv6 address
-	if (net.isIPv6(server)) return `[${server}]`; // If so, bracket it
+	if (isIPv6(server)) return `[${server}]`; // If so, bracket it
 
 	// Otherwise, return as is
 	return server;
 }
 
-module.exports = {
+export default {
 	convertClashProxiesToV2rayLinks
 };

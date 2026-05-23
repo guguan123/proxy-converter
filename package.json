@@ -1,6 +1,6 @@
 {
   "name": "clash2sub",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "A lightweight utility to convert Clash proxies to V2Ray subscription links.",
   "keywords": [
     "clash",
@@ -17,7 +17,7 @@
   },
   "license": "MIT",
   "author": "guguan123",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "types": "./index.d.ts",
   "files": [
@@ -26,6 +26,6 @@
     "README.md"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test.js"
   }
 }
