@@ -98,7 +98,7 @@ function convertClashProxiesToV2rayLinks(proxies) {
 
 					if (p.tls) {
 						// 加密类型 (reality, tls)
-						vlessParams.set('security', p["reality-opts"] ? 'reality' : 'tls');
+						vlessParams.set('security', p['reality-opts'] ? 'reality' : 'tls');
 
 						// TLS配置
 						if (p.servername) vlessParams.set('sni', p.servername);
@@ -114,7 +114,7 @@ function convertClashProxiesToV2rayLinks(proxies) {
 							if (p['ech-opts'].config) {
 								// 静态配置，直接塞入 Base64 字符串
 								vlessParams.set('ech', p['ech-opts'].config);
-							} else if (p['ech-opts']['query-server-name']) {
+							} else if (p['ech-opts']?.['query-server-name']) {
 								// 动态解析，host+doh 的格式
 								vlessParams.set('ech', `${p['ech-opts']['query-server-name']}+https://dns.alidns.com/dns-query`);
 							}
@@ -126,17 +126,25 @@ function convertClashProxiesToV2rayLinks(proxies) {
 					// 传输层配置
 					if (p.network === 'ws') {
 						vlessParams.set('type', 'ws');
-						if (p["ws-opts"]?.headers?.Host) vlessParams.set('host', p["ws-opts"].headers.Host);
-						if (p["ws-opts"]?.path) vlessParams.set('path', p["ws-opts"].path);
+						if (p['ws-opts']?.headers?.Host) vlessParams.set('host', p['ws-opts'].headers.Host);
+						if (p['ws-opts']?.path) vlessParams.set('path', p['ws-opts'].path);
 					} else if (p.network === 'http') {
 						vlessParams.set('type', 'tcp');
 						vlessParams.set('headerType', 'http');
-						if (p["http-opts"]?.headers?.Host) vlessParams.set('host', p["http-opts"].headers.Host);
-						if (p["http-opts"]?.path) vlessParams.set('path', p["http-opts"].path);
+						if (p['http-opts']?.headers?.Host) vlessParams.set('host', p['http-opts'].headers.Host);
+						if (p['http-opts']?.path) vlessParams.set('path', p['http-opts'].path);
 					} else if (p.network === 'xhttp') {
 						vlessParams.set('type', 'xhttp');
-						if (p["xhttp-opts"]?.path) vlessParams.set('path', p["xhttp-opts"].path);
-						if (p["xhttp-opts"]?.host) vlessParams.set('host', p["xhttp-opts"].host);
+						if (p['xhttp-opts']?.path) vlessParams.set('path', p['xhttp-opts'].path);
+						if (p['xhttp-opts']?.host) vlessParams.set('host', p['xhttp-opts'].host);
+						if (p['xhttp-opts']?.mode) vlessParams.set('mode', p['xhttp-opts'].mode);
+						if (p['xhttp-opts']?.['x-padding-bytes'] || p['xhttp-opts']?.['sc-max-each-post-bytes']) {
+							let xhttpExtra = {
+								...(p['xhttp-opts']?.['sc-max-each-post-bytes'] && { scMaxEachPostBytes: p['xhttp-opts']['sc-max-each-post-bytes'] }),
+								...(p['xhttp-opts']?.['x-padding-bytes'] && { xPaddingBytes: p['xhttp-opts']['x-padding-bytes'] })
+							};
+							vlessParams.set('extra', JSON.stringify(xhttpExtra));
+						}
 					}
 
 					const vlessQuery = vlessParams.toString();
