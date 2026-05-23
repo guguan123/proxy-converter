@@ -1,4 +1,4 @@
-const assert = require('node:assert');
+import assert from 'node:assert';
 import clash2sub from './index.js'
 
 /**
