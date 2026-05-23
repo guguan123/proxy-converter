@@ -5,7 +5,7 @@ import { isIPv6 } from 'net';
  * @param {Array<Object>} proxies - An array of proxy configuration objects.
  * @returns {Array<string>} An array of V2Ray formatted subscription links.
  */
-function convertClashProxiesToV2rayLinks(proxies) {
+export function convertClashProxiesToV2rayLinks(proxies) {
 	const lines = [];
 
 	for (const p of proxies) {
@@ -282,7 +282,3 @@ function normalize_server_address(server) {
 	// Otherwise, return as is
 	return server;
 }
-
-export default {
-	convertClashProxiesToV2rayLinks
-};
