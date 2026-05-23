@@ -282,3 +282,7 @@ function normalize_server_address(server) {
 	// Otherwise, return as is
 	return server;
 }
+
+export default {
+	convertClashProxiesToV2rayLinks
+};
