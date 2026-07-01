@@ -124,16 +124,16 @@ export function convertClashProxiesToV2rayLinks(proxies) {
 					}
 
 					// 传输层配置
-					if (p.network === 'ws') {
+					if (p.network == 'ws') {
 						vlessParams.set('type', 'ws');
 						if (p['ws-opts']?.headers?.Host) vlessParams.set('host', p['ws-opts'].headers.Host);
 						if (p['ws-opts']?.path) vlessParams.set('path', p['ws-opts'].path);
-					} else if (p.network === 'http') {
+					} else if (p.network == 'http') {
 						vlessParams.set('type', 'tcp');
 						vlessParams.set('headerType', 'http');
 						if (p['http-opts']?.headers?.Host) vlessParams.set('host', p['http-opts'].headers.Host);
 						if (p['http-opts']?.path) vlessParams.set('path', p['http-opts'].path);
-					} else if (p.network === 'xhttp') {
+					} else if (p.network == 'xhttp') {
 						vlessParams.set('type', 'xhttp');
 						if (p['xhttp-opts']?.path) vlessParams.set('path', p['xhttp-opts'].path);
 						if (p['xhttp-opts']?.host) vlessParams.set('host', p['xhttp-opts'].host);
@@ -145,6 +145,9 @@ export function convertClashProxiesToV2rayLinks(proxies) {
 							};
 							vlessParams.set('extra', JSON.stringify(xhttpExtra));
 						}
+					} else if (p.network == 'grpc') {
+						vlessParams.set('type', 'grpc');
+						if (p['grpc-opts']?.['grpc-service-name']) vlessParams.set('serviceName', p['grpc-opts'].['grpc-service-name']);
 					}
 
 					const vlessQuery = vlessParams.toString();
