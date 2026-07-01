@@ -147,7 +147,7 @@ export function convertClashProxiesToV2rayLinks(proxies) {
 						}
 					} else if (p.network == 'grpc') {
 						vlessParams.set('type', 'grpc');
-						if (p['grpc-opts']?.['grpc-service-name']) vlessParams.set('serviceName', p['grpc-opts'].['grpc-service-name']);
+						if (p['grpc-opts']?.['grpc-service-name']) vlessParams.set('serviceName', p['grpc-opts']['grpc-service-name']);
 					}
 
 					const vlessQuery = vlessParams.toString();
