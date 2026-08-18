@@ -234,6 +234,8 @@ export function convertClashProxiesToV2rayLinks(proxies) {
 
 					// TLS 相关
 					if (p.sni) tuicParams.set('sni', p.sni);
+					// 固定服务器证书（暂无文档说明此参数，但是实测v2rayN是能解析的）
+					if (p.fingerprint) tuicParams.set('pcs', p.fingerprint.replaceAll(':', ''));
 					if (p.alpn && p.alpn.length) tuicParams.set('alpn', p.alpn.join(','));
 					if (p['skip-cert-verify']) tuicParams.set('allow_insecure', '1');
 					if (p['disable-sni']) tuicParams.set('disable_sni', '1');
