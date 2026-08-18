@@ -65,8 +65,9 @@ export function convertClashProxiesToV2rayLinks(proxies) {
 						scy: p.cipher,
 						net: "tcp",
 						type: "none",
-						...(p.servername && { sni: p.servername }),
 						...(p.tls && { tls: "tls" }),
+						...(p.servername && { sni: p.servername }),
+						...(p.fingerprint && { pcs: p.fingerprint.replaceAll(':', '') }),
 						...(p["skip-cert-verify"] && { insecure: 1 }),
 						// 只有当 p.alpn 有值时，才添加 alpn 字段
 						...(p.alpn?.length && { alpn: p.alpn.join(",") })
@@ -102,6 +103,7 @@ export function convertClashProxiesToV2rayLinks(proxies) {
 
 						// TLS配置
 						if (p.servername) vlessParams.set('sni', p.servername);
+						if (p.fingerprint) vlessParams.set('pcs', p.fingerprint);
 						if (p["client-fingerprint"]) vlessParams.set('fp', p["client-fingerprint"]);
 						if (p["skip-cert-verify"]) vlessParams.set('allowInsecure', '1');
 
@@ -162,6 +164,7 @@ export function convertClashProxiesToV2rayLinks(proxies) {
 					if (p.tls !== false) {
 						trojanParams.set('security', p["reality-opts"] ? 'reality' : 'tls');
 						if (p.sni) trojanParams.set('sni', p.sni);
+						if (p.fingerprint) trojanParams.set('pcs', p.fingerprint);
 						if (p["skip-cert-verify"]) trojanParams.set('allowInsecure', '1');
 					} else {
 						trojanParams.set('security', 'none');
@@ -198,6 +201,9 @@ export function convertClashProxiesToV2rayLinks(proxies) {
 
 					// 禁用TLS证书验证
 					if (p["skip-cert-verify"]) hy2Params.set('insecure', '1');
+
+					// 服务器证书 SHA-256 指纹
+					if (p.fingerprint) trojanParams.set('pinSHA256', p.fingerprint.replaceAll(':', ''));
 
 					// Obfuscation
 					if (p.obfs) {
@@ -244,6 +250,8 @@ export function convertClashProxiesToV2rayLinks(proxies) {
 
 					// sni (优先用 servername，和其他 tls 节点保持一致)
 					if (p.sni) anyParams.set('sni', p.sni);
+
+					if (p.fingerprint) anyParams.set('pcs', p.fingerprint);
 
 					// 跳过证书验证
 					if (p["skip-cert-verify"]) anyParams.set('insecure', '1');
