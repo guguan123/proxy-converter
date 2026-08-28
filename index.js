@@ -203,7 +203,7 @@ export function convertClashProxiesToV2rayLinks(proxies) {
 					if (p["skip-cert-verify"]) hy2Params.set('insecure', '1');
 
 					// 服务器证书 SHA-256 指纹
-					if (p.fingerprint) trojanParams.set('pinSHA256', p.fingerprint.replaceAll(':', ''));
+					if (p.fingerprint) hy2Params.set('pinSHA256', p.fingerprint.replaceAll(':', ''));
 
 					// Obfuscation
 					if (p.obfs) {
